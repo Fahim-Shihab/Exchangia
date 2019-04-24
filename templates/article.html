@@ -1,0 +1,37 @@
+<div>
+<main>
+      <div>
+      {% for d in li %}
+    <a title="Post">
+
+			<article  onclick="getvalue(this)">
+
+                {% for row in data[d] %}
+                    {% if row==data[d][0] %}
+                     <p style="color: white">Address : {{data[d][0]}}</p>
+                     {% elif row==data[d][1] %}
+                     <p style="color: white">Housetype : {{ data[d][1]}}</p>
+                     {% elif row==data[d][2] %}
+                     <p style="color: white">Rentfee : {{ data[d][2]}}</p>
+                     {% elif row==data[d][3] %}
+                     <p style="color: white">Id : {{ data[d][3]}}</p>
+                     {% endif%}
+                {% endfor %}
+
+
+				<figure>
+
+					<img src="{{url_for('send_image2',filename = img[d-l])}}">
+					<p>{{ d }}</p>
+					<figcaption>Post</figcaption>
+				</figure>
+			</article>
+		</a>
+       {% endfor %}
+
+
+		</div>
+		</main>
+      <blockquote>
+      </blockquote>
+    </div>

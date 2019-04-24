@@ -1,0 +1,38 @@
+<doctype html>
+<title>Exchangia</title>
+<h2>Editing Post</h2>
+<form method="post" action="/update">
+    <dl>
+		<p>
+			<input name="inputName" value="{{ row['user_Name'] }}" type="text" placeholder="Name" autocomplete="off" required>
+		</p>
+		<p>
+			<input name="inputEmail" value="{{ row['user_Email'] }}" type="text" placeholder="Email" autocomplete="off" required>
+		</p>
+		<p>
+			<input name="inputPN" value="{{ row['user_PhoneNumber'] }}" type="text" placeholder="Phone Number" autocomplete="off" required>
+		</p>
+                <p>
+			<input name="inputFrom" value="{{ row['TicketFrom'] }}" type="text" placeholder="From" autocomplete="off" required>
+		</p>
+                <p>
+			<input name="inputTo" value="{{ row['TicketTo'] }}" type="text" placeholder="To" autocomplete="off" required>
+		</p>
+                <p>
+			<input name="inputTime" value="{{ row['TicketTime'] }}" type="text" placeholder="Time" autocomplete="off" required>
+		</p>
+                <p>
+			<input name="inputDate" value="{{ row['TicketDate'] }}" type="text" placeholder="Date" autocomplete="off" required>
+		</p>
+                <p>
+			<input name="inputTickets" value="{{ row['Tickets'] }}" type="text" placeholder="Tickets" autocomplete="off" required>
+		</p>
+                <p>
+			<input name="inputPrice" value="{{ row['TicketPrice'] }}" type="text" placeholder="Price" autocomplete="off" required>
+		</p>
+    </dl>
+    <p>
+		<input name="id" value="{{ row['user_id'] }}" type="hidden">
+		<input type="submit" value="Submit">
+	</p>
+</form>

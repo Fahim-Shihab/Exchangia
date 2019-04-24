@@ -1,0 +1,130 @@
+body
+{
+   background-color:#EEFFCC;
+}
+
+.divWholeScreen
+{
+   margin:0px;
+}
+
+.divPageBox
+{
+   position:relative;
+   width:800px;
+   min-height:350px;
+   text-align:left;
+   border:solid 1px Black;
+   background-color:#EEEEEE;
+}
+
+.divTitle
+{
+   width:400px;
+   margin-left:auto;
+   margin-right:auto;
+   text-align:center;
+}
+
+.divOuterUpperLeft
+{
+   position:absolute;
+   top:20px;
+   left:20px;
+   width:150px;
+   height:150px;
+   background-color:Yellow;
+}
+
+.divOuterUpperRight
+{
+   position:absolute;
+   top:20px;
+   right:20px;
+   width:150px;
+   height:150px;
+   background-color:Blue;
+}
+
+.divOuterLowerLeft
+{
+   position:absolute;
+   bottom:20px;
+   left:20px;
+   width:150px;
+   height:150px;
+   background-color:Lime;
+}
+
+.divOuterLowerRight
+{
+   position:absolute;
+   bottom:20px;
+   right:20px;
+   width:150px;
+   height:150px;
+   background-color:Red;
+}
+
+.divInnerUL
+{
+   position:absolute;
+   top:10px;
+   left:10px;
+   width:60px;
+   height:60px;
+   background-color:Maroon;
+}
+
+.divInnerUR
+{
+   position:absolute;
+   top:10px;
+   right:10px;
+   width:60px;
+   height:60px;
+   background-color:Green;
+}
+
+.divInnerLL
+{
+   position:absolute;
+   bottom:10px;
+   left:10px;
+   width:60px;
+   height:60px;
+   background-color:Navy;
+}
+
+.divInnerLR
+{
+   position:absolute;
+   bottom:10px;
+   right:10px;
+   width:60px;
+   height:60px;
+   background-color:Olive;
+}
+
+.divContent
+{
+   position:relative;
+   margin-left:200px;
+   padding:15px;
+   margin-bottom:20px;
+   width:370px;
+   background-color:White;
+   font-size:larger;
+}
+
+.divMyGoal
+{
+   position:absolute;
+   bottom:0px;
+   right:0px;
+   padding:6pt;
+   color:#FFF000;
+   background-color:#000040;
+   font-size:larger;
+   font-weight:bold;
+}
