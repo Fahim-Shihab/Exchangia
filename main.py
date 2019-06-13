@@ -110,7 +110,7 @@ def ads():
         cursor = conn.cursor(pymysql.cursors.DictCursor)
 
         today = str(date.today())
-        print(today)
+        # print(today)
         cursor.execute("SELECT * FROM ad_table WHERE TicketDate >= CURDATE() ORDER BY TicketDate ASC")
         rows = cursor.fetchall()
         x = len(rows)
