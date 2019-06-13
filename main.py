@@ -1,20 +1,65 @@
 import pymysql
 from app import app
-from tables import Results
+##from tables import Results
 from db_config import mysql
 from flask import flash, render_template, request, redirect
-from werkzeug import generate_password_hash, check_password_hash
 from jinja2 import Environment
+from datetime import date
+
+logged=0
+Uniname=''
 
 @app.route('/new_ad')
 def add_user_view():
     return render_template('PostAdd.html')
 
-logged=0
-Uniname=''
+@app.route('/filt')
+def filtering():
+    return render_template('FilterAd.html')
+
+@app.route('/filter',methods = ['POST', 'GET'])
+def filter():
+    try:
+        conn = mysql.connect()
+        cursor = conn.cursor(pymysql.cursors.DictCursor)
+
+        today = str(date.today())
+        print(today)
+
+        transport = request.form['inp_transport']
+        ticketFrom = request.form['inputFrom']
+        ticketTo = request.form['inputTo']
+        tickets = request.form['inputTickets']
+        price = request.form['inputPrice']
+
+        cursor.execute("SELECT * FROM ad_table WHERE TicketDate >= CURDATE() AND transport= %s AND TicketFrom = %s AND TicketTo = %s AND TicketPrice <= %s ORDER BY TicketDate ASC, Tickets DESC, TicketPrice ASC",(transport,ticketFrom,ticketTo,int(price)))
+        rows = cursor.fetchall()
+        print(rows)
+        x = len(rows)
+        print("row count ",x)
+        li = range(0,x)
+        li = [*li]
+        # li.reverse()
+
+        #table = Results(rows)
+
+        # table.border = True
+        return render_template('tbl.html', rows=rows,li=li, logged=logged)
+        # return render_template('tb.html',name=name,email=email,PhN=PhN,tickets=tickets)
+    except Exception as e:
+        print(e)
+    finally:
+        cursor.close() 
+        conn.close()
+
+@app.route('/log_out',methods = ['POST', 'GET'])
+def log_out():
+    global logged
+    logged=0
+    return redirect('/')
         
 @app.route('/add', methods=['POST'])
-def add_user():
+def add_post():
     try:
         """name = request.form['inputName']
         email = request.form['inputEmail']
@@ -27,11 +72,13 @@ def add_user():
         cursor.execute("SELECT email, phone FROM userinfo WHERE name=%s", Uniname)
 
         myresult = cursor.fetchone()
-        print("User's email:",myresult["email"],"Phone number:",myresult["phone"])
-
+        
+        create="CREATE TABLE if not exists `roytuts`.`ad_table` ( `user_id` BIGINT UNIQUE AUTO_INCREMENT, `transport` TEXT (15), `user_Name` TEXT (30), `user_Email` TEXT(30), `user_PhoneNumber` TEXT (15), `TicketFrom` TEXT (20), `TicketTo` TEXT (20), `TicketTime` TEXT (20), `TicketDate` TEXT (20), `Tickets` TEXT (5), `TicketPrice` TEXT (8), PRIMARY KEY (`user_id`))"
+        cursor.execute(create)
+        
         email = myresult["email"]
         phoneNumber = myresult["phone"]
-        
+        transport = request.form['inp_transport']
         ticketFrom = request.form['inputFrom']
         ticketTo = request.form['inputTo']
         ticketTime = request.form['inputTime']
@@ -40,9 +87,9 @@ def add_user():
         price = request.form['inputPrice']
 
         # validate the received values
-        if name and email and phoneNumber and ticketFrom and ticketTo and ticketTime and ticketDate and tickets and price and request.method == 'POST':
-            sql = "INSERT INTO ad_table(user_Name, user_Email, user_PhoneNumber, TicketFrom, TicketTo, TicketTime, TicketDate, Tickets, TicketPrice) VALUES(%s, %s, %s, %s, %s, %s, %s, %s, %s)"
-            data = (name, email, phoneNumber, ticketFrom, ticketTo, ticketTime, ticketDate, tickets, price,)
+        if name and email and phoneNumber and transport and ticketFrom and ticketTo and ticketTime and ticketDate and tickets and price and request.method == 'POST':
+            sql = "INSERT INTO ad_table(transport, user_Name, user_Email, user_PhoneNumber, TicketFrom, TicketTo, TicketTime, TicketDate, Tickets, TicketPrice) VALUES(%s, %s, %s, %s, %s, %s, %s, %s, %s, %s)"
+            data = (transport, name, email, phoneNumber, ticketFrom, ticketTo, ticketTime, ticketDate, tickets, price,)
             
             cursor.execute(sql, data)
             conn.commit()
@@ -61,13 +108,10 @@ def ads():
     try:
         conn = mysql.connect()
         cursor = conn.cursor(pymysql.cursors.DictCursor)
-        """create="CREATE TABLE if not exists `roytuts`.`ad_table` ( `user_id` BIGINT UNIQUE AUTO_INCREMENT, 
-        `user_Name` TEXT (30), `user_Email` TEXT(30), `user_PhoneNumber` TEXT (15), `TicketFrom` TEXT (20), 
-        `TicketTo` TEXT (20), `TicketTime` TEXT (20), `TicketDate` TEXT (20), `Tickets` TEXT (5), `TicketPrice` TEXT (8),
-         PRIMARY KEY (`user_id`))"
-        cursor.execute(create)"""
 
-        cursor.execute("SELECT * FROM ad_table ORDER BY TicketDate ASC")
+        today = str(date.today())
+        print(today)
+        cursor.execute("SELECT * FROM ad_table WHERE TicketDate >= CURDATE() ORDER BY TicketDate ASC")
         rows = cursor.fetchall()
         x = len(rows)
         li = range(0,x)
@@ -89,7 +133,7 @@ def ads():
             PhN.append(row["user_PhoneNumber"])
             tickets.append(row["Tickets"])"""
 
-        table = Results(rows)
+        # table = Results(rows)
 
         # table.border = True
         return render_template('tbl.html', rows=rows,li=li, logged=logged)
