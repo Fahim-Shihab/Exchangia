@@ -1,0 +1,38 @@
+<doctype html>
+<head>
+<link rel=stylesheet type=text/css href="../static/styleAdd.css">
+</head>
+<div class="form-style-2">
+<title>Exchangia</title>
+<div class="form-style-2-heading">Filter ads</div>
+<form method="post" action="/filter">
+
+    <label for="inp_transport"><span>Transport </span><select name="inp_transport" class="select-field">
+<option value="Bus">Bus</option>
+<option value="Train">Train</option>
+<option value="Airplane">Airplane</option>
+</select></label>
+
+    <label for="inputFrom"><span>From </span><select name="inputFrom" class="select-field">
+<option value="Dhaka">Dhaka</option>
+<option value="Chattagram">Chattagram</option>
+<option value="Sylhet">Sylhet</option>
+<option value="Rajshahi">Rajshahi</option>
+<option value="Khulna">Khulna</option>
+</select></label>
+
+    <label for="inputTo"><span>To </span><select name="inputTo" class="select-field">
+<option value="Chattagram">Chattagram</option>
+<option value="Dhaka">Dhaka</option>
+<option value="Sylhet">Sylhet</option>
+<option value="Rajshahi">Rajshahi</option>
+<option value="Khulna">Khulna</option>
+</select></label>
+
+    <label for="inputTickets"><span>Tickets <span class="required"></span></span><input type="number" class="input-field" name="inputTickets" value="" placeholder="Total tickets" /></label>
+
+    <label for="inputPrice"><span>Max Price <span class="required"></span></span><input type="number" class="input-field" name="inputPrice" value="" placeholder="Total price" /></label>
+    
+    <label><span> </span><input type="submit" value="Submit" /></label>
+</form>
+</div>
