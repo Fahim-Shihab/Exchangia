@@ -140,6 +140,7 @@ def ads():
         # return render_template('tb.html',name=name,email=email,PhN=PhN,tickets=tickets)
     except Exception as e:
         print(e)
+
     finally:
         cursor.close() 
         conn.close()
