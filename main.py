@@ -7,7 +7,7 @@ from jinja2 import Environment
 from datetime import date
 
 logged=0
-Uniname=''
+Uniemail=''
 
 @app.route('/new_ad')
 def add_user_view():
@@ -67,17 +67,18 @@ def add_post():
         conn = mysql.connect()
         cursor = conn.cursor(pymysql.cursors.DictCursor)
 
-        name = Uniname
+        email = Uniemail
 
-        cursor.execute("SELECT email, phone FROM userinfo WHERE name=%s", Uniname)
+        cursor.execute("SELECT name, phone FROM userinfo WHERE email=%s", Uniemail)
 
         myresult = cursor.fetchone()
         
         create="CREATE TABLE if not exists `roytuts`.`ad_table` ( `user_id` BIGINT UNIQUE AUTO_INCREMENT, `transport` TEXT (15), `user_Name` TEXT (30), `user_Email` TEXT(30), `user_PhoneNumber` TEXT (15), `TicketFrom` TEXT (20), `TicketTo` TEXT (20), `TicketTime` TEXT (20), `TicketDate` TEXT (20), `Tickets` TEXT (5), `TicketPrice` TEXT (8), PRIMARY KEY (`user_id`))"
         cursor.execute(create)
         
-        email = myresult["email"]
+        name = myresult["name"]
         phoneNumber = myresult["phone"]
+
         transport = request.form['inp_transport']
         ticketFrom = request.form['inputFrom']
         ticketTo = request.form['inputTo']
@@ -136,7 +137,7 @@ def ads():
         # table = Results(rows)
 
         # table.border = True
-        return render_template('tbl.html', rows=rows,li=li, logged=logged)
+        return render_template('tbl.html', rows=rows,li=li, logged=logged, Uniemail=Uniemail)
         # return render_template('tb.html',name=name,email=email,PhN=PhN,tickets=tickets)
     except Exception as e:
         print(e)
@@ -221,17 +222,17 @@ def loginpage():
 @app.route('/login', methods=['POST', 'GET'])
 def login():
    global logged
-   global Uniname
+   global Uniemail
    if request.method == 'POST':
-        user = request.form['username']
+        email = request.form['email']
         userpass = request.form['pass']
-        print("user:",user)
+        print("email:",email)
         print("password:",userpass)
 
         conn = mysql.connect()
         cursor = conn.cursor(pymysql.cursors.DictCursor)
 
-        cursor.execute("SELECT pass FROM userinfo WHERE name=%s", user)
+        cursor.execute("SELECT pass FROM userinfo WHERE email=%s", email)
 
         myresult = cursor.fetchone()
         print("real password:",myresult["pass"])
@@ -241,8 +242,8 @@ def login():
         if(str(userpass) == str(myresult["pass"])):
           print("successful login")
           logged=1
-          Uniname = user
-          print("user's name",Uniname)
+          Uniemail = email
+          print("user's email",Uniemail)
           return redirect('/')
         else:
           print("Failure in logging")
@@ -259,7 +260,7 @@ def signuppage():
 @app.route('/signup',methods = ['POST', 'GET'])
 def signup():
    global logged
-   global Uniname
+   global Uniemail
 
    if request.method == 'POST':
        
@@ -284,8 +285,8 @@ def signup():
        cursor.execute(sql, val)
        conn.commit()
        logged=1
-       Uniname = userName
-       print("Signed in as",Uniname) 
+       Uniemail = email
+       print("Signed in as",Uniemail) 
 
        return redirect('/')
    else:

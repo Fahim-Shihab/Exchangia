@@ -2,13 +2,13 @@
 body{
 			font: 1rem/1.6 "Helvetica", Sans-serif;
                         background-color: #0040ff;
-                        margin-left: 50px;
+                        margin-left: 200px;
 		}
 
 		main{
 			width: 100%;
 			margin:10px auto;
-                        margin-left: 50px;
+                        margin-left: 200px;
                         color: #0040ff;
 
 			-moz-column-width: 220px;
